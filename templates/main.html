@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <meta http-equiv="cache-control" content="no-cache">
+        
+        <!-- Bootstrap framework: Required meta tags -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    
+        <script type="text/javascript">
+            function asyncCall(invokeThis)
+            {
+                var req = new XMLHttpRequest()
+                req.onreadystatechange = function()
+                {
+                    if (req.readyState == 4)
+                    {
+                        if (req.status != 200)
+                        {
+                            //error handling code here
+                        }
+                        else
+                        {
+                            var response = JSON.parse(req.responseText)
+                            document.getElementById('myDiv').innerHTML = response.username
+                        }
+                    }
+                }
+            
+                req.open('POST', invokeThis)
+                req.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+//                var un = document.getElementById('scname').value
+//                var sec = document.getElementById('secret').value
+                var postVars = '' //'username=steve'+'&secret=password'
+                req.send(postVars)
+                
+                return false
+            }
+            
+        </script>        
+        
+        <title>{{ title }}</title>
+    </head>
+
+    <body>
+      <div class="container">
+        <div class="row">
+          <div class="col-1">
+              &nbsp;
+          </div>
+          <div class="col-8">    
+            <h3><small>Cat Station Zero</small></h3>
+          </div>
+          <div class="col-1">
+              &nbsp;
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-1">
+              &nbsp;
+          </div>
+          <div class="col-8">    
+            <h6><small>Live from My Dining Room</small></h6>
+          </div>
+          <div class="col-1">
+              &nbsp;
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-1">
+              &nbsp;
+          </div>
+          <div class="col-8">    
+            <h6><small>Page accessed at: {{ time }}</small></h6>
+          </div>
+          <div class="col-1">
+              &nbsp;
+          </div>
+        </div>
+        
+        
+        <div class="row">
+            <div class="col-1">
+              &nbsp;
+            </div>
+            <div class="col-10">
+              <img class="img-responsive"
+                src="http://svptech.ddns.net:8080?action=stream"
+                id="webcam"
+                height="461" width="346"></img>    
+            </div>
+            <div class="col-1">
+              &nbsp;
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1">
+              &nbsp;
+            </div>
+            <div class="col-10">
+                <h6>Actions</h6>
+            </div>
+            <div class="col-1">
+              &nbsp;
+            </div>
+            
+        </div>
+        
+<form action="" method="POST">
+        <div class="row">
+            <div class="col-1">
+              &nbsp;
+            </div>
+            <div class="col-10">
+                <button class="btn btn-success" onclick="return asyncCall('{{ url_for('feedcw') }}')">Feed (cw)</button>       
+                <button class="btn btn-success" onclick="return asyncCall('{{ url_for('light') }}')">Lights</button>       
+                <button class="btn btn-success" onclick="return asyncCall('{{ url_for('feedccw') }}')">Feed (ccw)</button>       
+            </div>
+            <div class="col-1">
+              &nbsp;
+            </div>
+        </div>
+</form>
+        
+        <div class="row">
+            <div class="col-1">
+              &nbsp;
+            </div>
+            <div class="col-10">
+                <h6>Status</h6>
+            </div>
+            <div class="col-1">
+              &nbsp;
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-1">
+              &nbsp;
+            </div>
+            <div class="col-10">
+                <a href="{{ url_for('json_status') }}" class="btn btn-dark" role="button">View Status</a>          
+            </div>
+            <div class="col-1">
+              &nbsp;
+            </div>
+        </div>
+        
+     </div>
+   </body>
+</html>
