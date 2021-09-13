@@ -42,22 +42,23 @@
               &nbsp;
           </div>
         </div>
-<!--
-        <div class="row">
-          <div class="col-1">
-              &nbsp;
-          </div>
-          <div class="col-8">    
-            <h6><small>Last update: {{ modtime }}</small></h6>
-          </div>
-          <div class="col-1">
-              &nbsp;
-          </div>
-        </div>
-      -->        
+
+
+
+
         <div class="form-group">
           <label for="feeder">Log File Content</label>
-          <textarea class="form-control" rows="25" id="feeder">{{ content }}</textarea>
+          <!-- <textarea class="form-control" rows="25" id="feeder">{{ content }}</textarea> -->
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Date-time</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Amt/Pulse</th>
+              </tr>
+            </thead>
+            {{ content|safe }}
+          </table>
         </div> 
               
      </div>
