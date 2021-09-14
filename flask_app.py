@@ -71,18 +71,24 @@ def json_status():
     j_file = builtins.open(pathname, 'r')
     j_data = json.load(j_file)
 
-    for key in j_data['entries'].keys():
+    # Since we run on Python 3.7.3, dicts preserve order. This
+    # means we can reverse the order that the keys are used
+    # by first making a list of the keys and using the
+    # builtin reversed function. 
+    # Reverse order presents the most recent data at the top
+    # of the list, which is what I want.
+    # Also, limit the size of this table to 100 rows.
+    count = 0
+    for key in reversed( list(j_data['entries'].keys() ) ):
+        count += 1
+        if count > 100:
+            break
         content = content + '<tr>'
         entry = j_data['entries'][key]
         content = content + '<th scope="row">'+key+'</th>'
-        # for key_2 in entry.keys():
-        #    content = content + f'<td>{key_2}: {entry[key_2]}</td>'
-        #   print(key_2)
         
-        key = 'start_weight'
-        start_weight = entry.get(key)
-        key = 'stable_weight'
-        stable_weight = entry.get(key)
+        start_weight = entry.get('start_weight')
+        stable_weight = entry.get('stable_weight')
         amt_dispensed = float(stable_weight) - float(start_weight)
         amt_dispensed_fmt = format(amt_dispensed, '.3f')
         content = content + f'<td>{amt_dispensed_fmt}</td>'
